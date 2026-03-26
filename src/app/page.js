@@ -22,11 +22,12 @@ async function checkSupabase() {
     //const apiHealthy = !error || error.code === '42P01' || error.code === 'PGRST116';
     const apiHealthy = !error || ['42P01', 'PGRST116', 'PGRST204'].includes(error.code);
 
-    return {
+    rreturn {
       status: apiHealthy ? 'connected' : 'error',
       latency: `${latency}ms`,
       url,
       error: apiHealthy ? null : error.message,
+      errorCode: error?.code,
     };
   } catch (err) {
     return { status: 'unreachable', message: err.message };
@@ -55,7 +56,7 @@ export default async function Home() {
       pass: supaResult.status === 'connected',
       detail: supaResult.status === 'connected'
         ? `OK (${supaResult.latency})`
-        : supaResult.message || supaResult.error || supaResult.status,
+        : `${supaResult.error || supaResult.message || supaResult.status} [code: ${supaResult.errorCode || 'none'}]`,
     },
     {
       label: 'Coolify Deploy',
