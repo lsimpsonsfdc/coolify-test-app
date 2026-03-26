@@ -19,7 +19,8 @@ async function checkSupabase() {
     const latency = Date.now() - start;
 
     // 42501 = insufficient_privilege or relation doesn't exist — both mean the API is responding
-    const apiHealthy = !error || error.code === '42P01' || error.code === 'PGRST116';
+    //const apiHealthy = !error || error.code === '42P01' || error.code === 'PGRST116';
+    const apiHealthy = !error || ['42P01', 'PGRST116', 'PGRST204'].includes(error.code);
 
     return {
       status: apiHealthy ? 'connected' : 'error',
