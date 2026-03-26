@@ -22,7 +22,7 @@ async function checkSupabase() {
     //const apiHealthy = !error || error.code === '42P01' || error.code === 'PGRST116';
     const apiHealthy = !error || ['42P01', 'PGRST116', 'PGRST204'].includes(error.code);
 
-    rreturn {
+    return {
       status: apiHealthy ? 'connected' : 'error',
       latency: `${latency}ms`,
       url,
